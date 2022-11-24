@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 let productSchema = new Schema(
   {
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true, uniqe: true },
     imgURL: { type: String, required: true },
     price: { type: Number, required: true },
     desc: { type: String },
@@ -11,7 +11,12 @@ let productSchema = new Schema(
     inStock: { type: Boolean, default: true },
     color: { type: Array },
     code: { type: String },
+    size: { type: Array },
     rating: { type: Number },
+    discount: { type: Boolean },
+    discountPercent: { type: Number },
+    brand: { type: String },
+    tag: { type: Array },
   },
   { timestamps: true }
 );
