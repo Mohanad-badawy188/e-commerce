@@ -47,7 +47,7 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
-router.post("/", adminVerifyToken, upload.single("img"), async (req, res) => {
+router.post("/",  upload.single("file"), async (req, res) => {
   const newProduct = new Product(req.body);
   try {
     const savedProduct = await newProduct.save();
