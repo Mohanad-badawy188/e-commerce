@@ -4,8 +4,12 @@ import styled from "styled-components";
 import ImgOnSale from "../../images/imgOnSale.png";
 import LampImage from "../../images/Lamp.png";
 
+
+const Wrap = styled.div`
+width: 100vw;
+`
 const Container = styled.div`
-  height: 700px;
+height: 700px;
   background-color: #f2f0ff;
   position: relative;
   display: flex;
@@ -47,10 +51,10 @@ const Text = styled.div`
   font-size: 16px;
   line-height: 28px;
   width: 77%;
-
+  margin-bottom: 30px;
   color: #8a8fb9;
 `;
-const Btn = styled.button`
+export const Btn = styled.button`
   font-family: "Josefin Sans";
   font-size: 17px;
   line-height: 20px;
@@ -59,7 +63,6 @@ const Btn = styled.button`
   color: #ffffff;
   border: none;
   padding: 10px 30px;
-  margin-top: 30px;
   border-radius: 3px;
   cursor: pointer;
   &:hover {
@@ -74,6 +77,8 @@ const SaleImg = styled.img`
 
 function HomePageSectionOne() {
   return (
+    <Wrap>
+
     <Container>
       <LampImg src={LampImage} />
       <LeftSide>
@@ -92,6 +97,7 @@ function HomePageSectionOne() {
         <SaleImg src={ImgOnSale} />
       </RightSide>
     </Container>
+    </Wrap>
   );
 }
 

@@ -2,11 +2,11 @@
 import React from 'react';
 import AddingItems from './AddingItems';
 import Home from './Home';
+import Router from './Router';
 const App = () => {
 
     return (  <div>
-       {/* <Home/> */}
-       <AddingItems />
+<Router />
       </div>
     );
   

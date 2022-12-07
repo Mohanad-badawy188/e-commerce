@@ -124,23 +124,17 @@ function AddingItems() {
     const formData = new FormData();
     formData.append("file", data.file[0]);
     try {
-      await axios({
+      const res = await axios({
         method: "post",
         url: "http://localhost:5000/api/product/upload",
         data: formData,
-      }).then(async (res) => {
-        const img = (
-          "http://localhost:5000/api/product/image/" + res.data.file.filename
-        );
+      });
 
-        data.imgURL = img;
-      })
+      const img =
+        "http://localhost:5000/api/product/image/" + res.data.file.filename;
 
-    } catch (e) {
-      console.log(e);
-    }
-    try {
-      await   axios({
+      data.imgURL = img;
+      await axios({
         method: "post",
         url: "http://localhost:5000/api/product",
 
@@ -149,14 +143,14 @@ function AddingItems() {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   const handleClick = (e) => {
     setDiscount(!discounts);
   };
 
   return (
-    <Container onSubmit={handleSubmit(onSubmit) }method='post'>
+    <Container onSubmit={handleSubmit(onSubmit)} method="post">
       <InputDiv>
         <InputName>Product Name :</InputName>
         <Input type="text" {...register("name")} defaultValue="" />
