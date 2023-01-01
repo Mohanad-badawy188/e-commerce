@@ -1,4 +1,4 @@
-import React, { useState,  useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   MailOutline,
@@ -109,8 +109,8 @@ const Item = styled.div`
   text-decoration: none;
   display: block;
   &:hover {
-color : violet;
-}
+    color: violet;
+  }
 `;
 function Headingbar() {
   const [display, setDisplay] = useState("none");
@@ -123,7 +123,8 @@ function Headingbar() {
   const HandleClick = () => {
     if (display === "none") {
       setDisplay("block");
-    } else {11
+    } else {
+      11;
       setDisplay("none");
     }
   };
@@ -139,63 +140,59 @@ function Headingbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   });
   return (
-      <HeadingBar>
-        <HeadingLeftSide>
-          <MailOutline sx={{ color: "white", width: "16px", height: "16px" }} />
-          <Email>mohanad2012987@gmail.com</Email>
-          <WifiCalling3
+    <HeadingBar>
+      <HeadingLeftSide>
+        <MailOutline sx={{ color: "white", width: "16px", height: "16px" }} />
+        <Email>mohanad2012987@gmail.com</Email>
+        <WifiCalling3 sx={{ color: "white", width: "16px", height: "16px" }} />
+        <Number>01100617775</Number>
+      </HeadingLeftSide>
+      <HeadingRightSide>
+        <Language onClick={HandleClick}>
+          English
+          <ExpandMore sx={{ color: "white", width: "16px", height: "16px" }} />
+          <Dropdown style={{ display: display }}>
+            <Item>English</Item>
+            <Item>Arabic</Item>
+          </Dropdown>
+        </Language>
+        <Currency onClick={HandleClickCurrency}>
+          USD
+          <ExpandMore
+            sx={{ color: "white", width: "16px", height: "16px" }}
+          />{" "}
+          <Dropdown style={{ display: displays }}>
+            <Item>USD</Item>
+            <Item>EGP</Item>
+          </Dropdown>
+        </Currency>
+        <Login>
+          Login
+          <PermIdentity
             sx={{ color: "white", width: "16px", height: "16px" }}
           />
-          <Number>01100617775</Number>
-        </HeadingLeftSide>
-        <HeadingRightSide>
-          <Language onClick={HandleClick}>
-            English
-            <ExpandMore
-              sx={{ color: "white", width: "16px", height: "16px" }}
-            />
-            <Dropdown style={{ display: display }}>
-              <Item>English</Item>
-              <Item>Arabic</Item>
-            </Dropdown>
-          </Language>
-          <Currency onClick={HandleClickCurrency}>
-            USD
-            <ExpandMore
-              sx={{ color: "white", width: "16px", height: "16px" }}
-            />{" "}
-            <Dropdown style={{ display: displays }}>
-              <Item>USD</Item>
-              <Item>EGP</Item>
-            </Dropdown>
-          </Currency>
-          <Login>
-            Login
-            <PermIdentity
-              sx={{ color: "white", width: "16px", height: "16px" }}
-            />
-          </Login>
-          <WishList>
-            Wishlist
-            <FavoriteBorder
-              sx={{
-                color: "white",
-                width: "16px",
-                height: "16px",
-                marginLeft: "2px",
-              }}
-            />
-          </WishList>
-          <ShoppingCartOutlined
+        </Login>
+        <WishList>
+          Wishlist
+          <FavoriteBorder
             sx={{
               color: "white",
-              width: "20px",
-              height: "20px",
-              cursor: "pointer",
+              width: "16px",
+              height: "16px",
+              marginLeft: "2px",
             }}
           />
-        </HeadingRightSide>
-      </HeadingBar>
+        </WishList>
+        <ShoppingCartOutlined
+          sx={{
+            color: "white",
+            width: "20px",
+            height: "20px",
+            cursor: "pointer",
+          }}
+        />
+      </HeadingRightSide>
+    </HeadingBar>
   );
 }
 

@@ -4,12 +4,11 @@ import styled from "styled-components";
 import ImgOnSale from "../../images/imgOnSale.png";
 import LampImage from "../../images/Lamp.png";
 
-
 const Wrap = styled.div`
-width: 100vw;
-`
+  width: 100vw;
+`;
 const Container = styled.div`
-height: 700px;
+  height: 700px;
   background-color: #f2f0ff;
   position: relative;
   display: flex;
@@ -78,25 +77,24 @@ const SaleImg = styled.img`
 function HomePageSectionOne() {
   return (
     <Wrap>
-
-    <Container>
-      <LampImg src={LampImage} />
-      <LeftSide>
-        <UpperHeader>Best Furniture For Your Castle....</UpperHeader>
-        <Header>
-          New Furniture Collection <br />
-          Trends in 2020
-        </Header>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est
-          adipiscing in phasellus non in justo.
-        </Text>
-        <Btn>Shop Now</Btn>
-      </LeftSide>
-      <RightSide>
-        <SaleImg src={ImgOnSale} />
-      </RightSide>
-    </Container>
+      <Container>
+        <LampImg src={LampImage} />
+        <LeftSide>
+          <UpperHeader>Best Furniture For Your Castle....</UpperHeader>
+          <Header>
+            New Furniture Collection <br />
+            Trends in 2020
+          </Header>
+          <Text>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in
+            est adipiscing in phasellus non in justo.
+          </Text>
+          <Btn>Shop Now</Btn>
+        </LeftSide>
+        <RightSide>
+          <SaleImg src={ImgOnSale} />
+        </RightSide>
+      </Container>
     </Wrap>
   );
 }

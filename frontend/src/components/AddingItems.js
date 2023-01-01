@@ -140,6 +140,7 @@ function AddingItems() {
 
         data: data,
       });
+      console.log(data);
     } catch (e) {
       console.log(e);
     }
@@ -182,7 +183,7 @@ function AddingItems() {
         <ArrayInput>
           {categoriesFields.map((item, index) => (
             <div key={item.id}>
-              <Input {...register(`categories.${index}.categories`)} />
+              <Input {...register(`categories.${index}`)} />
               <ADD
                 onClick={(e) => {
                   categoriesRemove(index), e.preventDefault();
@@ -194,7 +195,7 @@ function AddingItems() {
         </ArrayInput>
         <ADD
           onClick={(e) => {
-            categoriesAppend({}), e.preventDefault();
+            categoriesAppend("test"), e.preventDefault();
           }}>
           <AddOutlined sx={{ fontSize: "30px" }} />
         </ADD>
@@ -204,7 +205,7 @@ function AddingItems() {
         <ArrayInput>
           {colorFields.map((item, index) => (
             <div key={item.id}>
-              <Input {...register(`color.${index}.color`)} />
+              <Input {...register(`color.${index}`)} />
               <ADD
                 onClick={(e) => {
                   colorRemove(index), e.preventDefault();
@@ -223,11 +224,7 @@ function AddingItems() {
       </InputDiv>
       <InputDiv>
         <InputName>Product code :</InputName>
-        <Input
-          type="text"
-          {...register("code", { valueAsNumber: true })}
-          defaultValue=""
-        />
+        <Input type="text" {...register("code", {})} defaultValue="" />
         {errors.code && <Msg>{errors.code.message}</Msg>}{" "}
       </InputDiv>
       <InputDiv>
@@ -235,7 +232,7 @@ function AddingItems() {
         <ArrayInput>
           {sizeFields.map((item, index) => (
             <div key={item.id}>
-              <Input {...register(`size.${index}.size`)} />
+              <Input {...register(`size.${index}`)} />
               <ADD
                 onClick={(e) => {
                   sizeRemove(index), e.preventDefault();
@@ -288,7 +285,7 @@ function AddingItems() {
         <ArrayInput>
           {tagFields.map((item, index) => (
             <div key={item.id}>
-              <Input {...register(`tag.${index}.tag`)} />
+              <Input {...register(`tag.${index}`)} />
               <ADD
                 onClick={(e) => {
                   tagRemove(index), e.preventDefault();

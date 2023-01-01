@@ -1,14 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Pic from "../../images/HomeSec3.png";
 import { Btn } from "./HomePageSectionOne";
 
 const Container = styled.div`
   height: ${(props) => props.height || "600px"};
-  background-color:  ${(props) => props.BackGroundColor || "#f1f0ff"};
+  background-color: ${(props) => props.BackGroundColor || "#f1f0ff"};
   display: flex;
   align-items: center;
-  width: 100vw;
 `;
 const LeftSide = styled.div`
   flex: 1;

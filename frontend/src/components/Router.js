@@ -8,10 +8,7 @@ import {
 import AddingItems from "./AddingItems";
 import Home from "./Home";
 
-
-
 export default function Router() {
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -21,7 +18,6 @@ export default function Router() {
       path: "/AddItems",
       element: <AddingItems />,
     },
-
   ]);
 
   return <RouterProvider router={router} />;
