@@ -47,7 +47,7 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
-router.post("/",  upload.single("file"), async (req, res) => {
+router.post("/", upload.single("file"), async (req, res) => {
   const newProduct = new Product(req.body);
   try {
     const savedProduct = await newProduct.save();
@@ -93,13 +93,15 @@ router.get("/find/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
 router.get("/image/:filename", (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     if (!file || file.length === 0) {
       return res.status(404).json({ err: "noo file exists!" });
     }
     if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
-      // Read output to browser
+
       const readstream = gridfsBucket.openDownloadStreamByName(file.filename);
       readstream.pipe(res);
     } else {
@@ -111,9 +113,13 @@ router.get("/image/:filename", (req, res) => {
 });
 
 router.get("/", async (req, res) => {
+  const page = parseInt(req.query.page || "0");
+  const Limit = req.query.limit || 20;
   const qlast6 = req.query.last6;
   const latest = req.query.latest;
   const qCategory = req.query.category;
+  const Total = await Product.countDocuments({})
+  const TotalPages = Math.ceil(Total/Limit)
   try {
     let products;
     if (qlast6) {
@@ -127,10 +133,11 @@ router.get("/", async (req, res) => {
     } else if (latest) {
       products = await Product.find().sort({ createdAt: -1 });
     } else {
-      products = await Product.find();
+       products = await Product.find().limit(Limit).skip(Limit*page);
+
     }
 
-    res.status(200).json(products);
+    res.status(200).json({products,Total,TotalPages});
   } catch (err) {
     res.status(500).json(err);
   }

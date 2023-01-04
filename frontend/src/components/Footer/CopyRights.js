@@ -26,6 +26,7 @@ const IconsContainer = styled.div`
 `;
 const Icons = styled.div`
   cursor: pointer;
+  color: #151875;
 `;
 function CopyRights() {
   return (

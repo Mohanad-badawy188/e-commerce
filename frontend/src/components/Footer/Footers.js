@@ -43,6 +43,7 @@ const EmailBtn = styled.button`
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
+  cursor: pointer;
 
   padding: 12px 40px;
   color: #eeeffb;

@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import AddingItems from "./AddingItems";
 import Home from "./Home";
+import Shop from "./Shop";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -17,6 +18,10 @@ export default function Router() {
     {
       path: "/AddItems",
       element: <AddingItems />,
+    },
+    {
+      path: "/Shop",
+      element: <Shop />,
     },
   ]);
 

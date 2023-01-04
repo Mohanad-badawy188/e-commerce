@@ -75,7 +75,7 @@ const Sale = styled.img`
     display: block;
   }
 `;
-const TopLeftHover = styled.div`
+ const TopLeftHover = styled.div`
   position: absolute;
   bottom: 20px;
   left: 10px;
