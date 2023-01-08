@@ -87,6 +87,7 @@ function PartOne() {
   const filterdProducts = products.filter((item) =>
     item.categories.includes("trending")
   );
+  console.log(filterdProducts)
   return (
     <Container>
       <Header>Trending Products</Header>

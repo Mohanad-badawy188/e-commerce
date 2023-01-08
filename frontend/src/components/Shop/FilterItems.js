@@ -74,19 +74,19 @@ export const Categories = styled.div`
 export const Price = styled.div`
   margin-bottom: 50px;
 `;
-function FilterItems() {
+function FilterItems( ) {
   const handleClick = (e) => {
     console.log(e.target.checked, e.target.name, e.target.value);
   };
 
   return (
     <Container>
-      <FilterByBrand />
+      <FilterByBrand  />
       <FilterByDiscount />
       <FilterByRating />
 
       <FilterByCategories />
-      <FIlterByPrice />
+      <FIlterByPrice  />
     </Container>
   );
 }

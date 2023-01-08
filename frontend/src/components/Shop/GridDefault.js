@@ -9,10 +9,8 @@ import {
 } from "@mui/icons-material";
 import styled from "styled-components";
 import axios from "axios";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
 import ShopItem from "./ShopItem";
-import { Button } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   margin: 60px;
@@ -50,82 +48,90 @@ const PageNum = styled.div`
   min-width: 15px;
   text-align: center;
 `;
-const PageBtn = styled.button `
-background-color: white;
-border:  none;
-margin: 10px;
-width: 50px;
-height: 50px;
-text-align: center;
-margin: auto;
-align-items: center;
-cursor: pointer;
-color:#FB2CA8 ;
-
-
-`
+const PageBtn = styled.button`
+  background-color: white;
+  border: none;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  margin: auto;
+  align-items: center;
+  cursor: pointer;
+  color: #fb2ca8;
+`;
 
 function GridDefault() {
+  const filter = useSelector((state) => state.filter);
   const [Product, setProduct] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [pagebtn, setPagebtn] = useState(0);
-
   const [limit, setLimit] = useState(9);
-
-  const btnPages = Math.ceil(totalPage / 3);
+  let btnPages = Math.ceil(totalPage / 3);
   const Pages = new Array(totalPage).fill(null).map((v, i) => i);
+
   useEffect(() => {
-    const Items = async () => {
-      const res = await axios.get(
-        `http://localhost:5000/api/product?limit=${limit}&&page=${page - 1}
-          `
+    const filterItems = async () => {
+      const filterData = await axios.post(
+        `http://localhost:5000/api/product/filter?limit=${limit}&&page=${
+          page - 1
+        }
+        `,
+
+        {
+          brands: filter.brands.length > 0 && filter.brands,
+          categories: filter.categories.length > 0 && filter.categories,
+          ratings: filter.ratings.length > 0 && filter.ratings,
+          discounts: filter.discounts.length > 0 && filter.discounts,
+          prices: filter.prices.length > 0 && filter.prices,
+        }
       );
-      setProduct(res.data.products);
-      setTotalPage(res.data.TotalPages);
+
+      setProduct(filterData.data.products);
+      setTotalPage(filterData.data.TotalPages);
     };
-    Items();
-  }, [page]);
+    filterItems();
+  }, [filter, page]);
+  useEffect(() => {
+    setPage(1);
+    setPagebtn(0);
+  }, [filter]);
+
   const handlePrevPage = () => {
     if (page === 1) {
       return;
     } else {
       setPage(page - 1);
-      setPagebtn(page/3-1)
+      setPagebtn(page / 3 - 1);
     }
   };
   const handleNextPage = () => {
     if (page === totalPage) {
       return;
     } else {
-      setPage(page + 1 );
-      const test = Math.floor((page/3))
-      setPagebtn(test)
+      setPage(page + 1);
+      const test = Math.floor(page / 3);
+      setPagebtn(test);
     }
   };
   const handleNextFourPages = () => {
-    if (pagebtn == btnPages-1 ) {
+    if (pagebtn == btnPages - 1) {
       return setPagebtn(pagebtn);
     } else {
-      setPagebtn(pagebtn + 1 );
+      setPagebtn(pagebtn + 1);
       const test = pagebtn * 3 + 3 + 1;
       setPage(test);
     }
   };
   const handlePrevFourPages = () => {
-    if (pagebtn < 1 ) {
+    if (pagebtn < 1) {
     } else {
-      setPagebtn(pagebtn-1 );
+      setPagebtn(pagebtn - 1);
       setPage(pagebtn * 3);
     }
   };
-  console.log(pagebtn);
-  const test = (e) => {
-    console.log(e);
-  };
-  const handlePageClick = (event) => {
-    console.log(event.target.innerText);
-  };
+
   return (
     <Container>
       <Wrap>
@@ -141,13 +147,18 @@ function GridDefault() {
                 color={item.color}
                 price={item.price}
                 discount={item.discount}
+                discountPercent={item.discountPercent}
               />
             ))}
         </RightSide>
       </Wrap>
       <ChangePage>
-        <PageBtn onClick={handlePrevFourPages}><FirstPage /></PageBtn>
-        <PageBtn onClick={handlePrevPage}><ArrowBackIos /></PageBtn>
+        <PageBtn onClick={handlePrevFourPages}>
+          <FirstPage />
+        </PageBtn>
+        <PageBtn onClick={handlePrevPage}>
+          <ArrowBackIos />
+        </PageBtn>
         <PageNumContainer>
           {Pages.map((pageIndex, index) => (
             <PageNum
@@ -161,9 +172,12 @@ function GridDefault() {
             </PageNum>
           ))}
         </PageNumContainer>
-                <PageBtn onClick={handleNextPage}>< ArrowForwardIos /></PageBtn>
-        <PageBtn onClick={handleNextFourPages}><LastPage /></PageBtn>
-
+        <PageBtn onClick={handleNextPage}>
+          <ArrowForwardIos />
+        </PageBtn>
+        <PageBtn onClick={handleNextFourPages}>
+          <LastPage />
+        </PageBtn>
       </ChangePage>
     </Container>
   );

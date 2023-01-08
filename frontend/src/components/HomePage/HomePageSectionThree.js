@@ -6,6 +6,7 @@ import { Btn } from "./HomePageSectionOne";
 
 const Container = styled.div`
   height: ${(props) => props.height || "600px"};
+  width: 100vw;
   background-color: ${(props) => props.BackGroundColor || "#f1f0ff"};
   display: flex;
   align-items: center;

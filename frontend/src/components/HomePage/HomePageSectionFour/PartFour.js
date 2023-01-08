@@ -90,6 +90,7 @@ const ItemName = styled.div`
 `;
 function PartFour() {
   const products = useSelector((state) => state.products.products);
+  console.log(products)
 
   const FilteredProducts = products.filter((item) =>
     item.categories.includes("top")
