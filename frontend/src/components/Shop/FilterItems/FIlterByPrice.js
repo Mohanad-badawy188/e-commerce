@@ -13,12 +13,12 @@ function FIlterByPrice() {
     const test = value.split("-");
     const minValue = parseInt(test[0]);
     const maxValue = parseInt(test[1]);
-    let data = [minValue,maxValue ];
+    let data = {minValue : minValue,maxValue:maxValue };
     if (checked === true) {
       setFilters((filter) => [...filter,data]);
     } else if (checked === false) {
    
-      setFilters((filter) => filter.filter((x) => x[1] !== data[1]));
+      setFilters((filter) => filter.filter((x) => x.maxValue !== data.maxValue));
     }
   };
   useEffect(() => {

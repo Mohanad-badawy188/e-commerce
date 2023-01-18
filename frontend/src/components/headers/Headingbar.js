@@ -145,7 +145,7 @@ function Headingbar() {
         <MailOutline sx={{ color: "white", width: "16px", height: "16px" }} />
         <Email>mohanad2012987@gmail.com</Email>
         <WifiCalling3 sx={{ color: "white", width: "16px", height: "16px" }} />
-        <Number>01100617775</Number>
+        <Number>01021991536</Number>
       </HeadingLeftSide>
       <HeadingRightSide>
         <Language onClick={HandleClick}>

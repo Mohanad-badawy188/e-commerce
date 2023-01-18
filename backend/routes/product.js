@@ -14,6 +14,7 @@ var mongoose = require("mongoose");
 const GridFsStorage = require("multer-gridfs-storage").GridFsStorage;
 
 const { ReadStream } = require("fs");
+const { validateFilters } = require("./validator");
 let gfs, gridfsBucket;
 router.use(methodOverride("_method"));
 
@@ -123,53 +124,11 @@ router.get("/", async (req, res) => {
   let Total = await Product.countDocuments({});
   try {
     let products;
-    if (qlast6) {
-      products = await Product.find().sort({ createdAt: -1 }).limit(6);
-    }
-    //  else if (qCategory || qbrand || qrating || qprice || qdiscount) {
-    //         const category = qCategory.split(",");
-    //         const brand = qbrand.split(",");data
-    //         let rating = qrating.split(",");
-    //         rating = parseInt(rating);
-    //         console.log(rating);
-    //       const price = qprice.split(",");
-    //       const discount = qdiscount.split(",");
-    //       console.log(category)
-    //       console.log(brand)
-    //             products = await Product.find({
-    //               $or: [
-    //                 { categories: { $in: category } },
-    //                 { brand: { $in: brand } },
-    //       { discountPercent: { $in: discount } },
-    //       { rating: { $in: rating } },
 
-    //       { price: { $in: price } },
-    //         ],
-    //       })
-    //         .limit(Limit)
-    //         .skip(Limit * page);
-    //       Total = await Product.find({
-    //         $or: [
-    //           ...(category?.length && { categories: { $in: category } }),
-    //           ...(brand?.length && { brand: { $in: brand } }),
-    //       ...(discount?.length && { discountPercent: { $in: discount } }),
+    products = await Product.find()
+      .limit(Limit)
+      .skip(Limit * page);
 
-    //       { brand: { $in: brand } },
-    //       { discountPercent: { $in: discount } },
-    //       { rating: { $in: rating } },
-
-    //       { price: { $in: price } },   //     ],
-    //         }).countDocuments({});
-    //       }
-    //           ],
-    //         }).countDocuments({});
-    //     } else if (latest) {
-    //       products = await Product.find().sort({ createdAt: -1 });
-    //     } else {
-    //       products = await Product.find()
-    //         .limit(Limit)
-    //         .skip(Limit * page);
-    //     }
     const TotalPages = Math.ceil(Total / Limit);
 
     res.status(200).json({ products, Total, TotalPages });
@@ -180,67 +139,95 @@ router.get("/", async (req, res) => {
 router.post("/filter", async (req, res) => {
   const page = parseInt(req.query.page || "0");
   const Limit = req.query.limit || 20;
+  const sort = req.body.sort || "Latest";
+  let sortBy;
+  if (sort === "Latest") {
+    sortBy = { createdAt: -1 };
+  } else if (sort === "price(asc)") {
+    sortBy = { price: 1 };
+  } else if (sort === "Price(desc)") {
+    sortBy = { price: -1 };
+  }
 
   let Total = await Product.countDocuments({});
   const TotalPages = Math.ceil(Total / Limit);
   let products;
-  if (
-    req.body.brands ||
-    req.body.categories ||
-    req.body.ratings ||
-    req.body.discounts ||
-    req.body.prices
-  ) {
-    const brands = req.body.brands;
-    const categories = req.body.categories;
-    const ratings = req.body.ratings;
-    const discounts = req.body.discounts;
-    const prices = req.body.prices;
-    let min;
-    let max;
-    if (prices) {
-      const Price = prices?.flat();
-
-      min = Math.min(...Price);
-      max = Math.max(...Price);
-    }
-
-    const discountOffers = [];
-    if (discounts) {
-      discounts.map((item) => discountOffers.push(parseInt(item)));
-    }
-
+  if (req.body.searchItem) {
+    let data = { name: { $regex: req.body.searchItem, $options: "i" } };
     try {
-      products = await Product.find({
-        $or: [
-          { brand: { $in: brands } },
-          { categories: { $in: categories } },
-          { rating: { $in: ratings } },
-          { discountPercent: { $in: discountOffers } },
-          { price: { $gt: min, $lt: max } },
-        ],
-      })
+      products = await Product.find(data)
         .limit(Limit)
-        .skip(Limit * page);
-      Total = await Product.find({
-        $or: [
-          { brand: { $in: brands } },
-          { categories: { $in: categories } },
-          { rating: { $in: ratings } },
-          { discountPercent: { $in: discountOffers } },
-          { price: { $gt: min, $lt: max } },
-        ],
-      }).countDocuments({});
+        .skip(Limit * page)
+        .sort(sortBy);
+      Total = await Product.find(data).countDocuments({});
       const TotalPages = Math.ceil(Total / Limit);
 
       res.status(200).json({ products, Total, TotalPages });
     } catch (e) {
       res.status(500).json(e);
     }
+  } else if (
+    req.body.brands.length ||
+    req.body.categories.length ||
+    req.body.ratings.length ||
+    req.body.discounts.length ||
+    req.body.prices.length
+  ) {
+    const { error, value } = validateFilters(req.body);
+    if (error) {
+      console.log(error.message);
+      res.status(500).json(error);
+    } else {
+      const brands = req.body.brands;
+      const categories = req.body.categories;
+      const ratings = req.body.ratings;
+      const discounts = req.body.discounts;
+      const prices = req.body.prices;
+      const discountOffers = [];
+      if (discounts) {
+        discounts.map((item) => discountOffers.push(parseInt(item)));
+      }
+      console.log("brandd: ", brands);
+
+      let data = {
+        $or: [
+          ...(brands ? [{ brand: { $in: brands } }] : []),
+          ...(categories?.length ? [{ categories: { $in: categories } }] : []),
+          ...(ratings?.length ? [{ rating: { $in: ratings } }] : []),
+          ...(discounts?.length
+            ? [{ discountPercent: { $in: discountOffers } }]
+            : []),
+          ...(prices?.length
+            ? prices.map((item) => {
+                return {
+                  price: {
+                    $gt: item.minValue,
+                    $lt: item.maxValue,
+                  },
+                };
+              })
+            : []),
+        ],
+      };
+
+      try {
+        products = await Product.find(data)
+          .limit(Limit)
+          .skip(Limit * page)
+          .sort(sortBy);
+        Total = await Product.find(data).countDocuments({});
+        const TotalPages = Math.ceil(Total / Limit);
+
+        res.status(200).json({ products, Total, TotalPages });
+      } catch (e) {
+        res.status(500).json(e);
+      }
+    }
   } else {
     products = await Product.find()
       .limit(Limit)
-      .skip(Limit * page);
+      .skip(Limit * page)
+      .sort(sortBy);
     res.status(200).json({ products, Total, TotalPages });
   }
 });

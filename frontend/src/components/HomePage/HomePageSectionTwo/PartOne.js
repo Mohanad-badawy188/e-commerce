@@ -35,7 +35,8 @@ const FeaturedBody = styled.div`
 function PartOne() {
   const products = useSelector((state) => state.products.products);
 
-  const FeaturedProducts = products.filter((item) =>
+console.log(products)
+  const FeaturedProducts = products?.filter((item) =>
     item.categories.includes("Featured Products")
   );
 

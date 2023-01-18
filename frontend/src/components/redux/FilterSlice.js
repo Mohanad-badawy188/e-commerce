@@ -7,6 +7,10 @@ const initialState = {
   discounts :[],
   prices :[],
   ratings :[],
+  sort : "",
+  pages : 9,
+  search :"",
+  view :"grid"
 }
 
 
@@ -36,10 +40,26 @@ export const filterSlice = createSlice({
       state.discounts = action.payload;
 
     },
+    
+    setSort: (state,action) => {
+      state.sort = action.payload;
 
+    },
+    setPages: (state,action) => {
+      state.pages = action.payload;
+
+    },
+    setSearch: (state,action) => {
+      state.search = action.payload;
+  
+    },
+    setView: (state,action) => {
+      state.view = action.payload;
+  
+    },
   },
 })
 
-export const { setBrand,setDiscount,setPrice,setRating,setCat } = filterSlice.actions
+export const { setBrand,setDiscount,setPrice,setRating,setCat ,setSort,setPages ,setSearch,setView} = filterSlice.actions
 
 export default filterSlice.reducer

@@ -1,185 +1,155 @@
-import React, { useEffect, useState } from "react";
-import FilterItems from "./FilterItems";
-
-import {
-  ArrowForwardIos,
-  LastPage,
-  FirstPage,
-  ArrowBackIos,
-} from "@mui/icons-material";
+import React from "react";
 import styled from "styled-components";
-import axios from "axios";
-import ShopItem from "./ShopItem";
-import { useSelector } from "react-redux";
-
-const Container = styled.div`
-  margin: 60px;
+import {
+  ShoppingCartOutlined,
+  FavoriteBorder,
+  ZoomIn,
+  Shop,
+} from "@mui/icons-material";
+const Item = styled.div`
+  height: 400px;
+  width: 280px;
+  margin: 30px;
 `;
-const Wrap = styled.div`
+const ImgContainer = styled.div`
+  position: relative;
+  height: 290px;
+  background: #f6f7fb;
   display: flex;
-`;
-const RightSide = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 65%;
-`;
-const ChangePage = styled.div`
-  display: flex;
-  width: 400px;
-  margin: auto;
-`;
-const PageNumContainer = styled.span`
-  margin: auto;
-  width: 170px;
-  overflow: hidden;
-  display: flex;
-`;
-const PageNum = styled.div`
-  border: 1px solid #e0d3f5;
-  border-radius: 2px;
-  color: #e0d3f5;
-  padding: 5px 10px;
-  margin: 10px;
-  background-color: ${(props) => props.bgc};
   cursor: pointer;
-  transform: translateX(${(props) => props.pagebtn * -171}px);
-  height: 25px;
-
-  min-width: 15px;
-  text-align: center;
+  ${Item}:hover & {
+    background: #ebf4f3;
+  }
 `;
-const PageBtn = styled.button`
-  background-color: white;
-  border: none;
-  margin: 10px;
-  width: 50px;
-  height: 50px;
-  text-align: center;
+const ItemImg = styled.img`
   margin: auto;
   align-items: center;
+`;
+const ItemData = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 80px;
+  margin: 10px;
+`;
+const ItemName = styled.div`
+  font-family: "Josefin Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  width: fit-content;
+  margin: auto;
   cursor: pointer;
-  color: #fb2ca8;
+  color: #151875;
+`;
+const ItemColorContainer = styled.div`
+  display: flex;
+  width: 60px;
+  margin: auto;
+  justify-content: space-around;
+`;
+export const Dot = styled.div`
+  height: 11px;
+  width: 11px;
+  background-color: ${(props) => props.BGC};
+  border-radius: 50%;
+  margin-top: 5px;
+`;
+ const ItemPriceContainer = styled.div`
+  display: flex;
+  font-family: "Josefin Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  width: 120px;
+
+  margin: auto;
+  text-align: center;
+  justify-content: center;
+`;
+export const ItemPriceAfterDiscount = styled.div`
+  color: #151875;
+`;
+export const ItemPriceBeforeDiscount = styled.div`
+  color: #fb2e86;
+  text-decoration-line: line-through;
+  margin-left: 20px;
 `;
 
-function GridDefault() {
-  const filter = useSelector((state) => state.filter);
-  const [Product, setProduct] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(0);
-  const [pagebtn, setPagebtn] = useState(0);
-  const [limit, setLimit] = useState(9);
-  let btnPages = Math.ceil(totalPage / 3);
-  const Pages = new Array(totalPage).fill(null).map((v, i) => i);
+const TopLeftHover = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  display: none;
+  ${Item}:hover & {
+    display: block;
+    transition: all ease 0.5s;
+  }
+`;
+export const TopLeftHoverItem = styled.div`
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  margin: 5px;
+  text-align: center;
 
-  useEffect(() => {
-    const filterItems = async () => {
-      const filterData = await axios.post(
-        `http://localhost:5000/api/product/filter?limit=${limit}&&page=${
-          page - 1
-        }
-        `,
-
-        {
-          brands: filter.brands.length > 0 && filter.brands,
-          categories: filter.categories.length > 0 && filter.categories,
-          ratings: filter.ratings.length > 0 && filter.ratings,
-          discounts: filter.discounts.length > 0 && filter.discounts,
-          prices: filter.prices.length > 0 && filter.prices,
-        }
-      );
-
-      setProduct(filterData.data.products);
-      setTotalPage(filterData.data.TotalPages);
-    };
-    filterItems();
-  }, [filter, page]);
-  useEffect(() => {
-    setPage(1);
-    setPagebtn(0);
-  }, [filter]);
-
-  const handlePrevPage = () => {
-    if (page === 1) {
-      return;
-    } else {
-      setPage(page - 1);
-      setPagebtn(page / 3 - 1);
-    }
-  };
-  const handleNextPage = () => {
-    if (page === totalPage) {
-      return;
-    } else {
-      setPage(page + 1);
-      const test = Math.floor(page / 3);
-      setPagebtn(test);
-    }
-  };
-  const handleNextFourPages = () => {
-    if (pagebtn == btnPages - 1) {
-      return setPagebtn(pagebtn);
-    } else {
-      setPagebtn(pagebtn + 1);
-      const test = pagebtn * 3 + 3 + 1;
-      setPage(test);
-    }
-  };
-  const handlePrevFourPages = () => {
-    if (pagebtn < 1) {
-    } else {
-      setPagebtn(pagebtn - 1);
-      setPage(pagebtn * 3);
-    }
-  };
-
+  color: #2f1ac4;
+  padding: 5px;
+  &:hover {
+    color: rgba(19, 137, 255, 1);
+    transition: all ease 0.5s;
+    border-radius: 50%;
+    filter: drop-shadow(0px 8px 40px rgba(49, 32, 138, 0.05));
+    background-color: white;
+  }
+`;
+function GridDefault(item) {
   return (
-    <Container>
-      <Wrap>
-        <FilterItems />
-        <RightSide>
-          {Product &&
-            Product.map((item) => (
-              <ShopItem
-                _id={item._id}
-                key={item._id}
-                name={item.name}
-                imgURL={item.imgURL}
-                color={item.color}
-                price={item.price}
-                discount={item.discount}
-                discountPercent={item.discountPercent}
-              />
-            ))}
-        </RightSide>
-      </Wrap>
-      <ChangePage>
-        <PageBtn onClick={handlePrevFourPages}>
-          <FirstPage />
-        </PageBtn>
-        <PageBtn onClick={handlePrevPage}>
-          <ArrowBackIos />
-        </PageBtn>
-        <PageNumContainer>
-          {Pages.map((pageIndex, index) => (
-            <PageNum
-              key={index}
-              pagebtn={pagebtn}
-              bgc={page === pageIndex + 1 ? "#FB2CA8" : "white"}
-              onClick={(e) => {
-                e.preventDefault, setPage(pageIndex + 1);
-              }}>
-              {pageIndex + 1}
-            </PageNum>
+    <Item key={item._id}>
+      <ImgContainer>
+        <ItemImg src={item.imgURL} />
+        <TopLeftHover>
+          <TopLeftHoverItem>
+            {" "}
+            <ShoppingCartOutlined sx={{ heigh: "15px", width: "15px" }} />
+          </TopLeftHoverItem>
+          <TopLeftHoverItem>
+            {" "}
+            <FavoriteBorder sx={{ heigh: "15px", width: "15px" }} />
+          </TopLeftHoverItem>
+          <TopLeftHoverItem>
+            {" "}
+            <ZoomIn sx={{ heigh: "15px", width: "15px" }} />
+          </TopLeftHoverItem>
+        </TopLeftHover>
+      </ImgContainer>
+      <ItemData>
+        <ItemName>{item.name}</ItemName>
+        <ItemColorContainer>
+          {item.color.map((Color, index) => (
+            <Dot key={index} BGC={"#" + Color}></Dot>
           ))}
-        </PageNumContainer>
-        <PageBtn onClick={handleNextPage}>
-          <ArrowForwardIos />
-        </PageBtn>
-        <PageBtn onClick={handleNextFourPages}>
-          <LastPage />
-        </PageBtn>
-      </ChangePage>
-    </Container>
+        </ItemColorContainer>
+        <ItemPriceContainer>
+          <ItemPriceAfterDiscount>
+            {" "}
+            $
+            {item.discount
+              ? (
+                  item.price -
+                  item.price * (item.discountPercent / 100)
+                ).toFixed(0)
+              : item.price}
+            .00
+          </ItemPriceAfterDiscount>
+          {item.discount && (
+            <ItemPriceBeforeDiscount> ${item.price}.00</ItemPriceBeforeDiscount>
+          )}
+        </ItemPriceContainer>
+      </ItemData>
+    </Item>
   );
 }
 
