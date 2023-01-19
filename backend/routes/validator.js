@@ -11,4 +11,10 @@ const productsFilter = joi.object({
   searchItem: joi.exist(),then :joi.string().optional(),
   sort: joi.exist(),then :joi.string().optional(),
 });
+const RelatedProducts = joi.object({
+  brands:  joi.exist(),then :joi.array().optional(),
+  categories:joi.exist(),then : joi.array().optional(),
+  
+});
 exports.validateFilters = validator(productsFilter);
+exports.validateRelated = validator(RelatedProducts);

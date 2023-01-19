@@ -63,11 +63,12 @@ const PageBtn = styled.button`
   cursor: pointer;
   color: #fb2ca8;
 `;
-const ImgContainer = styled.div`
+export const ImgContainer = styled.div`
   width: 80%;
   margin: auto;
   text-align: center;
-  margin-top: 100px;
+  margin:100px  auto;
+
 
 `
 

@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import AddingItems from "./AddingItems";
 import Home from "./Home";
+import Product from "./Product";
 import Shop from "./Shop";
 
 export default function Router() {
@@ -22,6 +23,10 @@ export default function Router() {
     {
       path: "/Shop",
       element: <Shop />,
+    },
+    {
+      path: "/product/:id",
+      element: <Product />,
     },
   ]);
 

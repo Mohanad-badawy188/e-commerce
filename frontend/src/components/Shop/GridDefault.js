@@ -6,6 +6,7 @@ import {
   ZoomIn,
   Shop,
 } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 const Item = styled.div`
   height: 400px;
   width: 280px;
@@ -56,7 +57,7 @@ export const Dot = styled.div`
   border-radius: 50%;
   margin-top: 5px;
 `;
- const ItemPriceContainer = styled.div`
+const ItemPriceContainer = styled.div`
   display: flex;
   font-family: "Josefin Sans";
   font-style: normal;
@@ -113,15 +114,21 @@ function GridDefault(item) {
         <TopLeftHover>
           <TopLeftHoverItem>
             {" "}
-            <ShoppingCartOutlined sx={{ heigh: "15px", width: "15px" }} />
+            <Link to={`/product/${item._id}`}>
+              <ShoppingCartOutlined sx={{ heigh: "15px", width: "15px" }} />
+            </Link>
           </TopLeftHoverItem>
           <TopLeftHoverItem>
             {" "}
-            <FavoriteBorder sx={{ heigh: "15px", width: "15px" }} />
+            <Link to={`/product/${item._id}`}>
+              <FavoriteBorder sx={{ heigh: "15px", width: "15px" }} />
+            </Link>
           </TopLeftHoverItem>
           <TopLeftHoverItem>
             {" "}
-            <ZoomIn sx={{ heigh: "15px", width: "15px" }} />
+            <Link to={`/product/${item._id}`}>
+              <ZoomIn sx={{ heigh: "15px", width: "15px" }} />
+            </Link>
           </TopLeftHoverItem>
         </TopLeftHover>
       </ImgContainer>

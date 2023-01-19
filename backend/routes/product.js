@@ -14,7 +14,7 @@ var mongoose = require("mongoose");
 const GridFsStorage = require("multer-gridfs-storage").GridFsStorage;
 
 const { ReadStream } = require("fs");
-const { validateFilters } = require("./validator");
+const { validateFilters, validateRelated } = require("./validator");
 let gfs, gridfsBucket;
 router.use(methodOverride("_method"));
 
@@ -167,11 +167,11 @@ router.post("/filter", async (req, res) => {
       res.status(500).json(e);
     }
   } else if (
-    req.body.brands.length ||
-    req.body.categories.length ||
-    req.body.ratings.length ||
-    req.body.discounts.length ||
-    req.body.prices.length
+    req.body.brands ||
+    req.body.categories ||
+    req.body.ratings ||
+    req.body.discounts ||
+    req.body.prices
   ) {
     const { error, value } = validateFilters(req.body);
     if (error) {
@@ -231,5 +231,43 @@ router.post("/filter", async (req, res) => {
     res.status(200).json({ products, Total, TotalPages });
   }
 });
+router.post("/filter/related", async (req, res) => {
+  const Limit = req.query.limit || 4;
 
+  let products;
+  if (req.body.brands || req.body.categories) {
+    const { error, value } = validateRelated(req.body);
+    if (error) {
+      console.log(error.message);
+      res.status(500).json(error);
+    } else {
+      const brands = req.body.brands;
+      const categories = req.body.categories;
+
+      console.log(req.body)
+      let data = {
+        $or: [
+          ...(brands ? [{ brand: { $in: brands } }] : []),
+          ...(categories?.length ? [{ categories: { $in: categories } }] : []),
+        ],
+      };
+
+      try {
+        products = await Product.find(data).limit(4);
+
+        Total = await Product.find(data).countDocuments({});
+        const TotalPages = Math.ceil(Total / Limit);
+
+        res.status(200).json({ products, Total, TotalPages });
+      } catch (e) {
+        res.status(500).json(e);
+      }
+    }
+  } else {
+    products = await Product.find()
+      .limit(4)
+   
+    res.status(200).json({ products, Total, TotalPages });
+  }
+});
 module.exports = router;

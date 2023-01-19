@@ -1,5 +1,11 @@
-import { FavoriteBorder, ShoppingCartOutlined, Star, ZoomIn } from "@mui/icons-material";
+import {
+  FavoriteBorder,
+  ShoppingCartOutlined,
+  Star,
+  ZoomIn,
+} from "@mui/icons-material";
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
   Dot,
@@ -53,24 +59,23 @@ const ItemPriceContainer = styled.div`
   display: flex;
 `;
 
-
 const ItemRating = styled.div`
-margin-left: 40px;
+  margin-left: 40px;
 `;
 const ItemDescription = styled.div`
-font-family: 'Lato';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 28px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 28px;
 
-width: 85%;
+  width: 85%;
 
-color: #9295AA;
+  color: #9295aa;
 `;
 const HoverItems = styled.div`
-display: flex;
-`
+  display: flex;
+`;
 function ListItem(props) {
   return (
     <Item>
@@ -107,28 +112,63 @@ function ListItem(props) {
             )}
           </ItemPriceContainer>
           <ItemRating>
-          <Star sx={{ color: props.rating > 1 ?"#FFC107": "#B2B2B2", height: "15px", width: "15px" }} />
-        <Star sx={{color: props.rating >= 2 ?"#FFC107": "#B2B2B2", height: "15px", width: "15px" }} />
-        <Star sx={{ color: props.rating >= 3 ?"#FFC107": "#B2B2B2", height: "15px", width: "15px" }} />
-        <Star sx={{ color: props.rating >= 4 ?"#FFC107": "#B2B2B2", height: "15px", width: "15px" }} />
-        <Star sx={{color: props.rating >= 5 ?"#FFC107": "#B2B2B2", height: "15px", width: "15px" }} />
+            <Star
+              sx={{
+                color: props.rating > 1 ? "#FFC107" : "#B2B2B2",
+                height: "15px",
+                width: "15px",
+              }}
+            />
+            <Star
+              sx={{
+                color: props.rating >= 2 ? "#FFC107" : "#B2B2B2",
+                height: "15px",
+                width: "15px",
+              }}
+            />
+            <Star
+              sx={{
+                color: props.rating >= 3 ? "#FFC107" : "#B2B2B2",
+                height: "15px",
+                width: "15px",
+              }}
+            />
+            <Star
+              sx={{
+                color: props.rating >= 4 ? "#FFC107" : "#B2B2B2",
+                height: "15px",
+                width: "15px",
+              }}
+            />
+            <Star
+              sx={{
+                color: props.rating >= 5 ? "#FFC107" : "#B2B2B2",
+                height: "15px",
+                width: "15px",
+              }}
+            />
           </ItemRating>
         </Dflex>
         <ItemDescription>{props.description}</ItemDescription>
         <HoverItems>
-        <TopLeftHoverItem>
+          <TopLeftHoverItem>
             {" "}
-            <ShoppingCartOutlined sx={{ heigh: "15px", width: "15px" }} />
+            <Link to={`/product/${props._id}`}>
+              <ShoppingCartOutlined sx={{ heigh: "15px", width: "15px" }} />
+            </Link>
           </TopLeftHoverItem>
           <TopLeftHoverItem>
             {" "}
-            <FavoriteBorder sx={{ heigh: "15px", width: "15px" }} />
+            <Link to={`/product/${props._id}`}>
+              <FavoriteBorder sx={{ heigh: "15px", width: "15px" }} />
+            </Link>
           </TopLeftHoverItem>
           <TopLeftHoverItem>
             {" "}
-            <ZoomIn sx={{ heigh: "15px", width: "15px" }} />
+            <Link to={`/product/${props._id}`}>
+              <ZoomIn sx={{ heigh: "15px", width: "15px" }} />
+            </Link>
           </TopLeftHoverItem>
-
         </HoverItems>
       </ItemData>
     </Item>
