@@ -8,16 +8,24 @@ import PenImg from "../../images/pen.png";
 import CalendarImg from "../../images/Calendar.png";
 const Container = styled.div`
   height: 1000px;
+  @media (max-width: 1250px) {
+    height: 2000px;
+  }
 `;
 const ImgContainer = styled.div`
-  width: 80%;
   margin: auto;
   text-align: center;
   margin-top: 100px;
 `;
-const Img = styled.img`
+export const Img = styled.img`
   height: 100px;
   width: 900px;
+  @media (max-width: 1250px) {
+    width: 600px;
+  }
+  @media (max-width: 650px) {
+    display: none;
+  }
 `;
 const Header = styled.div`
   text-align: center;
@@ -30,9 +38,13 @@ const Header = styled.div`
 `;
 const ItemContainer = styled.div`
   display: flex;
-  width: 70%;
+  width: 95%;
   margin: auto;
   justify-content: space-around;
+  @media (max-width: 1250px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const Item = styled.div`
   height: 500px;
@@ -41,17 +53,30 @@ const Item = styled.div`
 
   box-shadow: 0px 8px 40px rgba(49, 32, 138, 0.05);
   border-radius: 5px;
+  margin: 20px auto;
+  @media (max-width: 420px) {
+width: 200px;
+    }
 `;
 const ItemImgContainer = styled.div`
   height: 260px;
   width: 380px;
+  @media (max-width: 420px) {
+width: 200px;
+height: 150px;
+    }
 `;
 const ItemImg = styled.img`
   width: 380px;
+  @media (max-width: 420px) {
+width: 200px;
+    }
 `;
 const ItemNameAndDate = styled.div`
   display: flex;
   margin: 20px;
+  @media (max-width: 420px) {
+flex-direction :column;    }
 `;
 const ItemName = styled.div`
   display: flex;

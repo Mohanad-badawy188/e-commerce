@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Check } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
 const BrandItems = styled.label`
-  display: flex;
+  display: ${(props) => props.display};
   position: relative;
   margin: 20px;
   cursor: pointer;
+  z-index: 1;
+  animation-name: filters;
+  animation-duration: 1s;
+  @keyframes filters {
+    0% {
+      top: -100%;
+    }
+
+    100% {
+      top: 0px;
+    }
+  }
 `;
 
 const ItemsCheck = styled.div`
   height: 16px;
-  width: 16px;
+  width: 20px;
   background: ${(props) => props.Bgc};
   border: none;
   cursor: pointer;
@@ -31,11 +42,13 @@ const CheckBox = styled.div`
   left: 1px;
   position: absolute;
 `;
+const Name = styled.div`
+  width: 150px;
+`;
 
 const Item = (props) => {
-
   return (
-    <BrandItems>
+    <BrandItems display={props.display}>
       <ItemCheckBox
         type="checkbox"
         name={props.name}
@@ -48,7 +61,7 @@ const Item = (props) => {
           <Check sx={{ heigh: "14px", width: "14px" }} />
         </CheckBox>
       </ItemsCheck>{" "}
-      {props.name}
+      <Name>{props.name}</Name>
     </BrandItems>
   );
 };

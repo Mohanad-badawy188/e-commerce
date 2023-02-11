@@ -3,6 +3,7 @@ import Headingbar from "./headers/Headingbar";
 import Navbar from "./headers/Navbar";
 
 function Header() {
+
   return (
     <div>
       <Headingbar />

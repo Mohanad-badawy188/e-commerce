@@ -15,6 +15,10 @@ const Header = styled.div`
   letter-spacing: 0.015em;
   padding-top: 150px;
   color: #151875;
+    @media (max-width: 900px) {
+      font-size: 25px;
+
+} 
 `;
 const Btn = styled.button`
   background: #fb2e86;

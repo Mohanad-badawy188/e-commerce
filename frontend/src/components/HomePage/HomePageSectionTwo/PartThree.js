@@ -9,6 +9,9 @@ import PropTypes from "prop-types";
 const Container = styled.div`
   margin-top: 100px;
   height: 600px;
+  @media (max-width: 1000px) {
+    height: 1600px;
+  }
 `;
 const Header = styled.div`
   text-align: center;
@@ -22,6 +25,17 @@ const ItemsContainer = styled.div`
   display: flex;
   justify-content: space-around;
   margin: 60px 170px;
+  @media (max-width: 1400px) {
+    margin: auto;
+    width: 1000px;
+    justify-content: space-between;
+  }
+  @media (max-width: 1000px) {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const Item = styled.div`
   background: #ffffff;
@@ -30,8 +44,15 @@ const Item = styled.div`
   box-shadow: 0px 8px 40px rgba(49, 32, 138, 0.05);
   display: flex;
   flex-direction: column;
+  margin: 0 20px;
   justify-content: space-around;
   padding: 20px;
+  @media (max-width: 1000px) {
+    margin: 30px auto;
+  }
+  @media (max-width: 400px) {
+    width: 80%;
+  }
 `;
 const ItemHeader = styled.div`
   font-family: "Josefin Sans";

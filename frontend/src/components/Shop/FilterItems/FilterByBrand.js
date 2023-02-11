@@ -6,6 +6,7 @@ import Item from "./FilterItem";
 
 function FilterByBrand(props) {
   const [filter, setFilters] = useState([]);
+  const [display, setDisplay] = useState(false);
   const dispatch = useDispatch();
   const handleCLick = (e) => {
     const name = e.target.name;
@@ -20,11 +21,15 @@ function FilterByBrand(props) {
   useEffect(() => {
     dispatch(setBrand(filter));
   }, [filter]);
+  const handleDisplay = () => {
+    setDisplay(!display);
+  };
   return (
     <Brand>
-      <Header>Product Brand</Header>
+      <Header onClick={handleDisplay}>Product Brand</Header>
 
       <Item
+        display={display ? "flex" : "none"}
         name={"Coaster Furniture"}
         Bgc={"#E5E0FC"}
         color={"#603EFF"}
@@ -32,6 +37,7 @@ function FilterByBrand(props) {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name={"Fusion Dot High Fashion"}
         Bgc={"#E5E0FC"}
         color={"#603EFF"}
@@ -39,6 +45,7 @@ function FilterByBrand(props) {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name={"Unique Furnitture Restor"}
         Bgc={"#E5E0FC"}
         color={"#603EFF"}
@@ -46,6 +53,7 @@ function FilterByBrand(props) {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name={"Dream Furnitture Flipping"}
         Bgc={"#E5E0FC"}
         color={"#603EFF"}
@@ -53,6 +61,7 @@ function FilterByBrand(props) {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name={"Young Repurposed"}
         Bgc={"#E5E0FC"}
         color={"#603EFF"}
@@ -60,6 +69,7 @@ function FilterByBrand(props) {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name={"Green DIY furniture"}
         Bgc={"#E5E0FC"}
         color={"#603EFF"}

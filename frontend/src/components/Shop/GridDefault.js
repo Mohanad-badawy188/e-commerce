@@ -11,6 +11,10 @@ const Item = styled.div`
   height: 400px;
   width: 280px;
   margin: 30px;
+
+  @media (max-width: 1250px) {
+    width: 180px;
+  }
 `;
 const ImgContainer = styled.div`
   position: relative;
@@ -23,6 +27,7 @@ const ImgContainer = styled.div`
   }
 `;
 const ItemImg = styled.img`
+  width: 90%;
   margin: auto;
   align-items: center;
 `;

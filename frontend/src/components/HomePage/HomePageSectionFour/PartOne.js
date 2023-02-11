@@ -1,10 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { fetchProducts } from "../../redux/productSlice";
 const Container = styled.div`
-  margin: 100px 300px;
+  margin: 100px auto;
+
 `;
 const Header = styled.div`
   font-family: "Josefin Sans";
@@ -17,21 +16,43 @@ const Header = styled.div`
 const ItemsContainer = styled.div`
   margin-top: 50px;
   display: flex;
+  flex-wrap:wrap;
   justify-content: space-around;
+  @media (max-width: 1100px) {
+    margin: auto 40px;
+    justify-content: space-between;
+
+}
+  @media (max-width: 850px) {
+
+    flex-direction: column;
+    align-items: center;
+}
 `;
 const Item = styled.div`
   height: 350px;
   width: 270px;
   filter: drop-shadow(0px 8px 40px rgba(49, 32, 138, 0.05));
   background: linear-gradient(0deg, #ffffff, #ffffff), #ffffff;
-`;
+  @media (max-width: 1100px) {
+width: 230px;
+height: 380px;
+}
+@media (max-width: 850px) {
+
+margin:40px auto;
+}
+`
+;
 const ItemImgContainer = styled.div`
   height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 15px;
+  margin:  auto;
   background-color: #f5f6f8;
+  width: 90%;
+
 `;
 const ItemImg = styled.img``;
 const ItemData = styled.div`
@@ -79,20 +100,30 @@ const ItemPriceBeforeDiscount = styled.div`
   color: rgba(21, 24, 117, 0.3);
 `;
 function PartOne() {
-  const products = useSelector((state) => state.products.products);
-  const dispatch = useDispatch();
+
+  const [products,setProducts]=useState([])
   useEffect(() => {
-    dispatch(fetchProducts());
+    const getItems = async () => {
+      try {
+        const res = await axios({
+          method: "get",
+          url: `http://localhost:5000/api/product?limit=4&&category=trending`,
+        });
+        setProducts(res.data)
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getItems();
   }, []);
-  const filterdProducts = products.filter((item) =>
-    item.categories.includes("trending")
-  );
-  console.log(filterdProducts)
+
+
   return (
     <Container>
       <Header>Trending Products</Header>
       <ItemsContainer>
-        {filterdProducts.map((item) => (
+        {products?.products?.map((item) => (
           <Item key={item._id}>
             <ItemImgContainer>
               <ItemImg src={item.imgURL} />

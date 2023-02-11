@@ -4,10 +4,16 @@ import { ImgContainer } from "../Shop/StoreMain";
 import Hpic from "../../images/HomePageS6.png";
 import axios from "axios";
 import { Star } from "@mui/icons-material";
-import { ItemPriceAfterDiscount, ItemPriceBeforeDiscount } from "../Shop/GridDefault";
+import {
+  ItemPriceAfterDiscount,
+  ItemPriceBeforeDiscount,
+} from "../Shop/GridDefault";
+import { Img } from "../HomePage/HomePageSectionSix";
 const Container = styled.div`
-  width: 65%;
+  width: 95%;
+
   margin: auto;
+  margin-top: 100px;
 `;
 const Header = styled.div`
   font-family: "Josefin Sans";
@@ -17,13 +23,31 @@ const Header = styled.div`
 `;
 const ItemsContainer = styled.div`
   display: flex;
-  margin:  150px 0px;
+  margin: 150px auto;
   width: 1200px;
   justify-content: space-between;
+  @media (max-width: 1300px) {
+    width: 1000px;
+  }
+  @media (max-width: 1000px) {
+    width: 95%;
+  }
+  @media (max-width: 850px) {
+    flex-wrap: wrap;
+    justify-content: center;
+
+  }
 `;
 const Item = styled.div`
   height: 300px;
   width: 280px;
+  margin: 10px;
+  @media (max-width: 1300px) {
+    width: 200px;
+  }
+  @media (max-width: 850px) {
+    margin: 70px 50px;
+  }
 `;
 const ItemImgContainer = styled.div`
   height: 250px;
@@ -32,6 +56,12 @@ const ItemImgContainer = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  @media (max-width: 1030px) {
+    width: 180px;
+  }
+  @media (max-width: 850px) {
+    width: 200px;
+  }
 `;
 const ItemRatingAndName = styled.div`
   display: flex;
@@ -53,8 +83,8 @@ const ItemRatingContainer = styled.div`
   margin: 5px;
 `;
 const ItemPriceContainer = styled.div`
-display: flex;
-justify-content: center;
+  display: flex;
+  justify-content: center;
 `;
 function RelatedProducts(props) {
   const [items, setItems] = useState([]);
@@ -62,7 +92,7 @@ function RelatedProducts(props) {
   let brands = [...[props?.brands]];
   categories = categories.flat();
   brands = brands.flat();
-  console.log(categories);
+
   useEffect(() => {
     const GetItems = async () => {
       const res = await axios.post(
@@ -74,7 +104,6 @@ function RelatedProducts(props) {
         }
       );
       setItems(res.data);
-      console.log(res.data);
     };
     GetItems();
   }, [props]);
@@ -92,7 +121,7 @@ function RelatedProducts(props) {
               <ItemRatingContainer>
                 <Star
                   sx={{
-                    color: item.rating  > 1? "#FFC107" : "#B2B2B2",
+                    color: item.rating > 1 ? "#FFC107" : "#B2B2B2",
                     height: "15px",
                     width: "15px",
                   }}
@@ -120,7 +149,7 @@ function RelatedProducts(props) {
                 />
                 <Star
                   sx={{
-                    color: (item.rating >= 5 ? "#FFC107" : "#B2B2B2"),
+                    color: item.rating >= 5 ? "#FFC107" : "#B2B2B2",
                     height: "15px",
                     width: "15px",
                   }}
@@ -128,31 +157,30 @@ function RelatedProducts(props) {
               </ItemRatingContainer>
             </ItemRatingAndName>
             <ItemPriceContainer>
-            <ItemPriceAfterDiscount>
               {" "}
-              $
-              {item.discount
-                ? (
-                    item.price -
-                    item.price * (item.discountPercent / 100)
-                  ).toFixed(0)
-                : props.price}
-              .00
-            </ItemPriceAfterDiscount>
-            {item.discount && (
-              <ItemPriceBeforeDiscount>
-                {" "}
-                ${item.price}.00
-              </ItemPriceBeforeDiscount>
-            )}
-
+              <ItemPriceAfterDiscount>
+                $
+                {item.discount
+                  ? (
+                      item.price -
+                      item.price * (item.discountPercent / 100)
+                    ).toFixed(0)
+                  : item.price}
+                .00
+              </ItemPriceAfterDiscount>
+              {item.discount && (
+                <ItemPriceBeforeDiscount>
+                  {" "}
+                  ${item.price}.00
+                </ItemPriceBeforeDiscount>
+              )}
             </ItemPriceContainer>
           </Item>
         ))}
       </ItemsContainer>
 
       <ImgContainer>
-        <img src={Hpic} />
+        <Img src={Hpic} />
       </ImgContainer>
     </Container>
   );

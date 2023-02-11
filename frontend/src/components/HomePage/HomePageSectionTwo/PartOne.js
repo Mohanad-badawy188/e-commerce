@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -8,10 +8,14 @@ import { Pagination } from "swiper";
 import "../../../index.css";
 
 import PartOneProps from "./PartOneProps";
-import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Container = styled.div`
   min-height: 75vh;
+  @media (max-width: 1000px) {
+    height: 2000px;
+  }
+  
 `;
 const FeaturedProduct = styled.div`
   margin-top: 80px;
@@ -30,15 +34,34 @@ const FeaturedBody = styled.div`
   height: 500px;
   display: flex;
   position: relative;
+  @media (max-width: 1300px) {
+    width: 1000px;
+    margin: auto;
+    justify-content: center;
+  }
+  @media (max-width: 1000px) {
+    width: auto;
+    display: block;
+    margin: auto;
+  }
 `;
 
 function PartOne() {
-  const products = useSelector((state) => state.products.products);
-
-console.log(products)
-  const FeaturedProducts = products?.filter((item) =>
-    item.categories.includes("Featured Products")
-  );
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const getItems = async () => {
+      try {
+        const res = await axios({
+          method: "get",
+          url: `http://localhost:5000/api/product?limit=4&&category=Featured Products`,
+        });
+        setProducts(res.data.products);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getItems();
+  }, []);
 
   return (
     <Container>
@@ -46,28 +69,17 @@ console.log(products)
         <FeaturedTitle>Featured Products</FeaturedTitle>
 
         <FeaturedBody>
-          <Swiper
-            slidesPerView={4}
-            spaceBetween={30}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Pagination]}
-            className="mySwiper">
-            {FeaturedProducts &&
-              FeaturedProducts.map((item) => (
-                <SwiperSlide key={item._id}>
-                  <PartOneProps
-                    name={item.name}
-                    imgURL={item.imgURL}
-                    color={item.color}
-                    code={item.code}
-                    price={item.price}
-                    _id={item._id}
-                  />
-                </SwiperSlide>
-              ))}
-          </Swiper>
+          {products.map((item) => (
+            <PartOneProps
+            key={item._id}
+              name={item.name}
+              imgURL={item.imgURL}
+              color={item.color}
+              code={item.code}
+              price={item.price}
+              _id={item._id}
+            />
+          ))}
         </FeaturedBody>
       </FeaturedProduct>
     </Container>

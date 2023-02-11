@@ -6,7 +6,6 @@ import {
   ArrowBackIosNewOutlined,
   ArrowForwardIosOutlined,
 } from "@mui/icons-material";
-import HomePageSectionFive from "./HomePageSectionFive";
 const SliderPages = styled.div`
   display: flex;
   width: 100%;
@@ -59,15 +58,15 @@ var timer;
 function Slider() {
   const [pageIndex, setPageIndex] = useState(0);
 
-    timer = setTimeout(() => {
-      if (pageIndex === 2) {
-          clearTimeout(timer);
+    // timer = setTimeout(() => {
+    //   if (pageIndex === 2) {
+    //       clearTimeout(timer);
 
-        setPageIndex(0);
-      } else {
-        setPageIndex((prev) => prev + 1);
-      }
-    }, 8000);
+    //     setPageIndex(0);
+    //   } else {
+    //     setPageIndex((prev) => prev + 1);
+    //   }
+    // }, 8000);
   const handleClick = (direction) => {
     if (direction === "left") {
       setPageIndex(pageIndex > 0 ? pageIndex - 1 : 2);

@@ -1,5 +1,6 @@
 import { Search } from "@mui/icons-material";
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 const Container = styled.div`
   display: flex;
@@ -26,6 +27,13 @@ const List = styled.ul`
   display: flex;
   width: 500px;
   justify-content: space-around;
+  @media (max-width: 670px) {
+    width: 300px;
+    justify-content: space-between;
+  }
+  @media (max-width: 450px) {
+    display: none;
+  }
 `;
 const Item = styled.li`
   list-style: none;
@@ -52,11 +60,17 @@ const SearchInput = styled.input`
   border: 1px solid rgba(1, 1, 1, 0.5);
   border-right: none;
   padding: 0px 20px;
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
 const SearchButton = styled.button`
   background-color: #fb2e86;
   border: none;
   height: 37px;
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
 const Navbar = () => {
   return (
@@ -64,11 +78,15 @@ const Navbar = () => {
       <LeftSide>
         <Logo>Hekto</Logo>
         <List>
-          <Item>Home</Item>
+          <Link to={"/"} style={{ textDecoration: "none" }}>
+            <Item>Home</Item>
+          </Link>
           <Item>Pages</Item>
           <Item>Products</Item>
           <Item>Blog</Item>
-          <Item>Shop</Item>
+          <Link to={"/shop"} style={{ textDecoration: "none" }}>
+            <Item>Shop</Item>
+          </Link>
           <Item>Contact</Item>
         </List>
       </LeftSide>

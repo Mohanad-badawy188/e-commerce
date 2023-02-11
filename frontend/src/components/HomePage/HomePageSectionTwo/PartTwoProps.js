@@ -11,9 +11,12 @@ import { motion } from "framer-motion/dist/framer-motion";
 import styled from "styled-components";
 const Item = styled.div`
   height: 320px;
-  width: 23%;
+  width: 25%;
   margin: 50px;
   position: relative;
+  @media (max-width: 1300px) {
+    width: 300px;
+  }
 `;
 
 const ImgContainer = styled.div`

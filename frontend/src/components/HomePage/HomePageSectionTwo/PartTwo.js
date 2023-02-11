@@ -3,9 +3,10 @@ import styled from "styled-components";
 
 import { motion } from "framer-motion/dist/framer-motion";
 import PartTwoProps from "./PartTwoProps";
-import { useSelector } from "react-redux";
+import axios from "axios";
 const Container = styled.div`
   min-height: 80vh;
+
 `;
 const Header = styled.div`
   text-align: center;
@@ -20,6 +21,12 @@ export const NavMenu = styled.div`
   display: flex;
   justify-content: center;
   margin: 60px;
+  @media (max-width: 930px) {
+    display: block;
+    width: fit-content;
+    margin:50px auto;
+    text-align: center;
+  }
 `;
 export const NavItem = styled.div`
   margin: 0px 50px;
@@ -46,11 +53,22 @@ const ItemsContainer = styled.div`
 function PartTwo() {
   const [categories, setCategories] = useState("New Arrival");
 
-  const products = useSelector((state) => state.products.products);
-
-  const FilteredProducts = products.filter((item) =>
-    item.categories.includes(categories)
-  );
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const getItems = async () => {
+      try {
+        const res = await axios({
+          method: "get",
+          url: `http://localhost:5000/api/product?limit=8&&category=${categories}`,
+        });
+        setProducts(res.data);
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getItems();
+  }, [categories]);
 
   const NavItems = (props) => {
     return (
@@ -77,18 +95,17 @@ function PartTwo() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         layout>
-        {FilteredProducts &&
-          FilteredProducts.map((item) => (
-            <PartTwoProps
-              key={item._id}
-              name={item.name}
-              imgURL={item.imgURL}
-              discountPercent={item.discountPercent}
-              price={item.price}
-              discount={item.discount}
-              _id={item._id}
-            />
-          ))}
+        {products?.products?.map((item) => (
+          <PartTwoProps
+            key={item._id}
+            name={item.name}
+            imgURL={item.imgURL}
+            discountPercent={item.discountPercent}
+            price={item.price}
+            discount={item.discount}
+            _id={item._id}
+          />
+        ))}
       </ItemsContainer>
     </Container>
   );

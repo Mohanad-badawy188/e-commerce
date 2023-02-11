@@ -6,6 +6,8 @@ import Item from "./FilterItem";
 
 function FilterByCategories() {
   const [filter, setFilters] = useState([]);
+  const [display, setDisplay] = useState(false);
+
   const dispatch = useDispatch();
   const handleCLick = (e) => {
     const name = e.target.name;
@@ -20,10 +22,14 @@ function FilterByCategories() {
   useEffect(() => {
     dispatch(setCat(filter));
   }, [filter]);
+  const handleDisplay = () => {
+    setDisplay(!display);
+  };
   return (
     <Categories>
-      <Header>Categories</Header>
+      <Header onClick={handleDisplay}>Categories</Header>
       <Item
+        display={display ? "flex" : "none"}
         name="Prestashop"
         value="categories"
         Bgc="#FFDBF1"
@@ -31,6 +37,7 @@ function FilterByCategories() {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name="Magento"
         value="categories"
         Bgc="#FFDBF1"
@@ -38,6 +45,7 @@ function FilterByCategories() {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name="Accessories"
         value="categories"
         Bgc="#FFDBF1"
@@ -45,6 +53,7 @@ function FilterByCategories() {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name="Bags"
         value="categories"
         Bgc="#FFDBF1"
@@ -52,6 +61,7 @@ function FilterByCategories() {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name="osCommerce"
         value="categories"
         Bgc="#FFDBF1"
@@ -59,6 +69,7 @@ function FilterByCategories() {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name="Bigcommerce"
         value="categories"
         Bgc="#FFDBF1"
@@ -66,6 +77,7 @@ function FilterByCategories() {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name="New Arrival"
         value="categories"
         Bgc="#FFDBF1"
@@ -73,6 +85,7 @@ function FilterByCategories() {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name="Best Seller"
         value="categories"
         Bgc="#FFDBF1"
@@ -80,6 +93,7 @@ function FilterByCategories() {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name="Featured Products"
         value="categories"
         Bgc="#FFDBF1"

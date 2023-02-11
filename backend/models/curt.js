@@ -4,16 +4,16 @@ var Schema = mongoose.Schema;
 let cartSchema = new Schema(
   {
     userId: { type: String, required: true },
-    products: {
-      product: {
-        type: Object,
-      },
-      quantity: {
-        type: Number,
-        default: 1,
-      },
+
+    product: {
+      type: Object,
+    },
+    quantity: {
+      type: Number,
+      default: 1, 
     },
   },
+
   { timestamps: true }
 );
 

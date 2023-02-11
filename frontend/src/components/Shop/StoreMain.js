@@ -13,29 +13,39 @@ import GridDefault from "./GridDefault";
 import { useSelector } from "react-redux";
 import ListItem from "./ListItem";
 import Hpic from "../../images/HomePageS6.png";
-
+import { Img } from "../HomePage/HomePageSectionSix";
 
 const Container = styled.div`
-  margin: 60px;
+  margin: 20px;
 `;
 const Wrap = styled.div`
   display: flex;
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
 `;
 const RightSide = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 65%;
+  justify-content: center;
 `;
 const ChangePage = styled.div`
   display: flex;
   width: 400px;
   margin: auto;
+  @media (max-width: 420px) {
+    width: 250px;
+  }
+
 `;
 const PageNumContainer = styled.span`
   margin: auto;
   width: 170px;
   overflow: hidden;
   display: flex;
+  @media (max-width: 420px) {
+    display: none;
+  }
 `;
 const PageNum = styled.div`
   border: 1px solid #e0d3f5;
@@ -47,9 +57,14 @@ const PageNum = styled.div`
   cursor: pointer;
   transform: translateX(${(props) => props.pagebtn * -171}px);
   height: 25px;
-
+  @media (max-width: 420px) {
+    transform: translateX(${(props) => props.pagebtn * -170}px);
+  }
   min-width: 15px;
   text-align: center;
+  @media (max-width: 420px) {
+    display: none;
+  }
 `;
 const PageBtn = styled.button`
   background-color: white;
@@ -62,15 +77,16 @@ const PageBtn = styled.button`
   align-items: center;
   cursor: pointer;
   color: #fb2ca8;
+  @media (max-width: 420px) {
+    margin: auto;
+  }
 `;
 export const ImgContainer = styled.div`
-  width: 80%;
+  width: auto;
   margin: auto;
   text-align: center;
-  margin:100px  auto;
-
-
-`
+  margin: 100px auto;
+`;
 
 function StoreMain() {
   const filter = useSelector((state) => state.filter);
@@ -152,37 +168,35 @@ function StoreMain() {
       <Wrap>
         <FilterItems />
         <RightSide>
-          {filter.view === "grid" ? (
-            Product &&
-            Product.map((item) => (
-              <GridDefault
-                _id={item._id}
-                key={item._id}
-                name={item.name}
-                imgURL={item.imgURL}
-                color={item.color}
-                price={item.price}
-                discount={item.discount}
-                discountPercent={item.discountPercent}
-              />
-            ))
-          ) : (
-            Product &&
-            Product.map((item) => (
-              <ListItem
-                _id={item._id}
-                key={item._id}
-                name={item.name}
-                imgURL={item.imgURL}
-                color={item.color}
-                price={item.price}
-                discount={item.discount}
-                discountPercent={item.discountPercent}
-                rating = {item.rating}
-                description = {item.desc}
-              />
-            ))
-          ) }
+          {filter.view === "grid"
+            ? Product &&
+              Product.map((item) => (
+                <GridDefault
+                  _id={item._id}
+                  key={item._id}
+                  name={item.name}
+                  imgURL={item.imgURL}
+                  color={item.color}
+                  price={item.price}
+                  discount={item.discount}
+                  discountPercent={item.discountPercent}
+                />
+              ))
+            : Product &&
+              Product.map((item) => (
+                <ListItem
+                  _id={item._id}
+                  key={item._id}
+                  name={item.name}
+                  imgURL={item.imgURL}
+                  color={item.color}
+                  price={item.price}
+                  discount={item.discount}
+                  discountPercent={item.discountPercent}
+                  rating={item.rating}
+                  description={item.desc}
+                />
+              ))}
         </RightSide>
       </Wrap>
       <ChangePage>
@@ -213,7 +227,7 @@ function StoreMain() {
         </PageBtn>
       </ChangePage>
       <ImgContainer>
-        <img src={Hpic} />
+        <Img src={Hpic} />
       </ImgContainer>
     </Container>
   );

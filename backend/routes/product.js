@@ -116,7 +116,9 @@ router.get("/", async (req, res) => {
   const Limit = req.query.limit || 20;
   const qlast6 = req.query.last6;
   const latest = req.query.latest;
-  // const qCategory = req.query.category;
+
+  const qCategory = req.query.category;
+
   // const qbrand = req.query.brand;
   // const qrating = req.query.rating;
   // const qprice = req.query.price;
@@ -124,10 +126,22 @@ router.get("/", async (req, res) => {
   let Total = await Product.countDocuments({});
   try {
     let products;
-
-    products = await Product.find()
-      .limit(Limit)
-      .skip(Limit * page);
+    if (qCategory) {
+      Total = await Product.find({
+        categories: {
+          $in: [qCategory],
+        },
+      }).countDocuments({});
+      products = await Product.find({
+        categories: {
+          $in: [qCategory],
+        },
+      }).limit(Limit);
+    } else {
+      products = await Product.find()
+        .limit(Limit)
+        .skip(Limit * page);
+    }
 
     const TotalPages = Math.ceil(Total / Limit);
 
@@ -175,7 +189,6 @@ router.post("/filter", async (req, res) => {
   ) {
     const { error, value } = validateFilters(req.body);
     if (error) {
-      console.log(error.message);
       res.status(500).json(error);
     } else {
       const brands = req.body.brands;
@@ -187,7 +200,6 @@ router.post("/filter", async (req, res) => {
       if (discounts) {
         discounts.map((item) => discountOffers.push(parseInt(item)));
       }
-      console.log("brandd: ", brands);
 
       let data = {
         $or: [
@@ -238,13 +250,11 @@ router.post("/filter/related", async (req, res) => {
   if (req.body.brands || req.body.categories) {
     const { error, value } = validateRelated(req.body);
     if (error) {
-      console.log(error.message);
       res.status(500).json(error);
     } else {
       const brands = req.body.brands;
       const categories = req.body.categories;
 
-      console.log(req.body)
       let data = {
         $or: [
           ...(brands ? [{ brand: { $in: brands } }] : []),
@@ -264,9 +274,8 @@ router.post("/filter/related", async (req, res) => {
       }
     }
   } else {
-    products = await Product.find()
-      .limit(4)
-   
+    products = await Product.find().limit(4);
+
     res.status(200).json({ products, Total, TotalPages });
   }
 });

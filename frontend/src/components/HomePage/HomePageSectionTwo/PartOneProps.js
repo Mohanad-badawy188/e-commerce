@@ -15,6 +15,18 @@ const Item = styled.div`
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
   margin: auto 20px;
   position: relative;
+  @media (max-width: 1300px) {
+    width: 220px;
+    margin: auto 10px;
+  }
+  @media (max-width: 1000px) {
+    width: 300px;
+    margin: 40px auto;
+  }
+  @media (max-width: 450px) {
+    width: 90%;
+    margin: 40px auto;
+  }
 `;
 const ItemImgContainer = styled.div`
   background: #f6f7fb;

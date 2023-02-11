@@ -6,6 +6,8 @@ import Item from "./FilterItem";
 
 function FilterByDiscount() {
   const [filter, setFilters] = useState([]);
+  const [display, setDisplay] = useState(false);
+
   const dispatch = useDispatch();
   const handleCLick = (e) => {
     const name = e.target.name;
@@ -20,32 +22,39 @@ function FilterByDiscount() {
   useEffect(() => {
     dispatch(setDiscount(filter));
   }, [filter]);
+  const handleDisplay = () => {
+    setDisplay(!display);
+  };
   return (
-    <Discount>
-      <Header>Discount Offer</Header>
-      <Item
-        name={"10% Discount Offer"}
-        Bgc="#FFDBF1"
-        color="#FF3EB2"
-        value="Discount"
-        handleCLick={handleCLick}
-      />
-      <Item
-        name={"20% Discount Offer"}
-        Bgc="#FFDBF1"
-        color="#FF3EB2"
-        value="Discount"
-        handleCLick={handleCLick}
-      />
+    
+      <Discount>
+        <Header onClick={handleDisplay}>Discount Offer</Header>
+        <Item
+          display={display ? "flex" : "none"}
+          name={"10% Discount Offer"}
+          Bgc="#FFDBF1"
+          color="#FF3EB2"
+          value="Discount"
+          handleCLick={handleCLick}
+        />
+        <Item
+          display={display ? "flex" : "none"}
+          name={"20% Discount Offer"}
+          Bgc="#FFDBF1"
+          color="#FF3EB2"
+          value="Discount"
+          handleCLick={handleCLick}
+        />
 
-      <Item
-        name={"30% Discount Offer"}
-        Bgc="#FFDBF1"
-        color="#FF3EB2"
-        value="Discount"
-        handleCLick={handleCLick}
-      />
-    </Discount>
+        <Item
+          display={display ? "flex" : "none"}
+          name={"30% Discount Offer"}
+          Bgc="#FFDBF1"
+          color="#FF3EB2"
+          value="Discount"
+          handleCLick={handleCLick}
+        />
+      </Discount>
   );
 }
 

@@ -4,26 +4,39 @@ import { GridViewRounded, FormatListBulleted } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { setPages, setSearch, setSort, setView } from "../redux/FilterSlice";
 
-const Container = styled.div``;
+const Container = styled.div`
+  @media (max-width: 420px) {
+    margin-top: 150px;
+  }
+`;
 const NavMenu = styled.div`
   color: black;
   height: 50px;
-  width: 90%;
+  width: 95%;
   margin: 60px auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  @media (max-width: 800px) {
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 const LeftSide = styled.div`
   font-family: "Josefin Sans";
   font-size: 22px;
   line-height: 26px;
-
+  margin-right: 40px;
   color: #151875;
 `;
 const RightSide = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 400px) {
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 50px;
+  }
 `;
 const ItemsNum = styled.div`
   font-family: "Lato";
@@ -34,6 +47,9 @@ const ItemsNum = styled.div`
 
   margin: 30px;
   color: #3f509e;
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 const ItemsNumInput = styled.input`
   width: 50px;
@@ -95,7 +111,7 @@ function ShopNavMenu() {
   const [perPages, setPerPages] = useState(9);
   const [searchs, setSearchs] = useState("");
   const [view, setViews] = useState("grid");
-  console.log(perPages)
+  console.log(perPages);
   const handleChange = (e) => {
     if (e.target.value < 1) {
       setPerPages(9);
@@ -110,7 +126,7 @@ function ShopNavMenu() {
     dispatch(setView(view));
 
     console.log(sort);
-  }, [sort, perPages,searchs,view]);
+  }, [sort, perPages, searchs, view]);
   return (
     <Container>
       <NavMenu>
@@ -118,14 +134,11 @@ function ShopNavMenu() {
         <RightSide>
           <ItemsNum>
             Per Page:
-            <ItemsNumInput
-              type="number"
-              onChange={handleChange}
-            />
+            <ItemsNumInput type="number" onChange={handleChange} />
           </ItemsNum>
           <Sort>
             Sort By:{" "}
-            <SortInput onChange={(e)=>setSorts(e.target.value)}>
+            <SortInput onChange={(e) => setSorts(e.target.value)}>
               <option>Latest</option>
               <option>price(asc)</option>
               <option>Price(desc)</option>
@@ -134,7 +147,7 @@ function ShopNavMenu() {
           <View>
             View:
             <GridViewRounded
-            onClick={()=>setViews("grid")}
+              onClick={() => setViews("grid")}
               sx={{
                 height: "15px",
                 width: "15px",
@@ -144,9 +157,7 @@ function ShopNavMenu() {
               }}
             />
             <FormatListBulleted
-            
-            onClick={()=>setViews("list")}
-
+              onClick={() => setViews("list")}
               sx={{
                 height: "15px",
                 width: "15px",
@@ -156,7 +167,7 @@ function ShopNavMenu() {
               }}
             />
           </View>
-          <SearchInput  onChange={(e)=>setSearchs(e.target.value)}/>
+          <SearchInput onChange={(e) => setSearchs(e.target.value)} />
         </RightSide>
       </NavMenu>
     </Container>

@@ -1,4 +1,3 @@
-import { Style } from "@mui/icons-material";
 import React from "react";
 import styled from "styled-components";
 import ImgOnSale from "../../images/imgOnSale.png";
@@ -15,15 +14,27 @@ const Container = styled.div`
   justify-content: space-around;
 
   padding: 0px 250px;
+  @media (max-width: 1400px) {
+    padding: 0px 15px 50px 250px;
+  }
+  @media (max-width: 1100px) {
+    padding: 0px 20px;
+  }
 `;
 const LampImg = styled.img`
   position: absolute;
   top: 0px;
-  left: 40px;
+  left: 0%;
   height: 300px;
+  @media (max-width: 1100px) {
+    display: none;
+  }
 `;
 const LeftSide = styled.div`
   margin-top: 10%;
+  @media (max-width: 850px) {
+    text-align: center;
+  }
 `;
 const UpperHeader = styled.div`
   font-family: "Lato";
@@ -42,6 +53,11 @@ const Header = styled.div`
   font-weight: 800;
   width: 110%;
   color: #000000;
+  @media (max-width: 450px) {
+    font-size: 20px;
+    width: 70%;
+    margin: auto;
+  }
 `;
 const Text = styled.div`
   font-family: "Lato";
@@ -52,6 +68,11 @@ const Text = styled.div`
   width: 77%;
   margin-bottom: 30px;
   color: #8a8fb9;
+  @media (max-width: 850px) {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 30px;
+  }
 `;
 export const Btn = styled.button`
   font-family: "Josefin Sans";
@@ -68,7 +89,11 @@ export const Btn = styled.button`
     background-color: #2f1ac4;
   }
 `;
-const RightSide = styled.div``;
+const RightSide = styled.div`
+  @media (max-width: 8500px) {
+    display: none;
+  }
+`;
 const SaleImg = styled.img`
   height: 500px;
   margin-top: 100px;

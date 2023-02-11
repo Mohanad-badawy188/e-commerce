@@ -6,6 +6,8 @@ import Item from "./FilterItem";
 
 function FIlterByPrice() {
   const [filter, setFilters] = useState([]);
+  const [display, setDisplay] = useState(false);
+
   const dispatch = useDispatch();
   const handleCLick = (e) => {
     const value = e.target.value;
@@ -13,21 +15,26 @@ function FIlterByPrice() {
     const test = value.split("-");
     const minValue = parseInt(test[0]);
     const maxValue = parseInt(test[1]);
-    let data = {minValue : minValue,maxValue:maxValue };
+    let data = { minValue: minValue, maxValue: maxValue };
     if (checked === true) {
-      setFilters((filter) => [...filter,data]);
+      setFilters((filter) => [...filter, data]);
     } else if (checked === false) {
-   
-      setFilters((filter) => filter.filter((x) => x.maxValue !== data.maxValue));
+      setFilters((filter) =>
+        filter.filter((x) => x.maxValue !== data.maxValue)
+      );
     }
   };
   useEffect(() => {
     dispatch(setPrice(filter));
   }, [filter]);
+  const handleDisplay = () => {
+    setDisplay(!display);
+  };
   return (
     <Price>
-      <Header>Price Filter</Header>
+      <Header onClick={handleDisplay}>Price Filter</Header>
       <Item
+        display={display ? "flex" : "none"}
         name="$0.00 - $150.00"
         value="0-150"
         Bgc="#FFDBF1"
@@ -35,6 +42,7 @@ function FIlterByPrice() {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name="$150.00 - $350.00"
         value="150-350"
         Bgc="#FFDBF1"
@@ -42,6 +50,7 @@ function FIlterByPrice() {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name="$150.00 - $504.00"
         value="150-504"
         Bgc="#FFDBF1"
@@ -49,6 +58,7 @@ function FIlterByPrice() {
         handleCLick={handleCLick}
       />
       <Item
+        display={display ? "flex" : "none"}
         name="$500 +"
         value="500-100000"
         Bgc="#FFDBF1"

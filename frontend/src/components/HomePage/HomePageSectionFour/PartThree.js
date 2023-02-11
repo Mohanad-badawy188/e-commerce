@@ -10,6 +10,12 @@ const Container = styled.div`
   width: 65%;
   margin: auto;
   height: 900px;
+  @media (max-width: 1250px) {
+    height: 1300px;
+  }
+  @media (max-width: 550px) {
+    height: 1600px;
+  }
 `;
 const Header = styled.div`
   margin-top: 40px;

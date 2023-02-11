@@ -16,10 +16,16 @@ import {
 
 const Item = styled.div`
   height: 300px;
-  width: 900px;
+  width: 90%;
   box-shadow: 0px 0px 20px 5px rgba(248, 246, 253, 0.75);
   display: flex;
   margin: 10px;
+  @media (max-width: 750px) {
+    height: 600px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const ItemImgContainer = styled.div`
@@ -29,6 +35,9 @@ const ItemImgContainer = styled.div`
   flex: 1;
   margin: 25px;
   background-color: #f5f5f5;
+  @media (max-width: 750px) {
+    width: 250px;
+  }
 `;
 const ItemImg = styled.img``;
 const ItemData = styled.div`
@@ -37,9 +46,15 @@ const ItemData = styled.div`
   margin: 25px;
   flex-direction: column;
   justify-content: space-around;
+  @media (max-width: 750px) {
+    align-items: center;
+  }
 `;
 const Dflex = styled.div`
   display: flex;
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
 `;
 const ItemColorContainer = styled.div`
   display: flex;
@@ -61,6 +76,9 @@ const ItemPriceContainer = styled.div`
 
 const ItemRating = styled.div`
   margin-left: 40px;
+  @media (max-width: 400px) {
+    margin-top: 15px;
+  }
 `;
 const ItemDescription = styled.div`
   font-family: "Lato";

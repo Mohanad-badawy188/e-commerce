@@ -9,6 +9,11 @@ const Container = styled.div`
   background: #e7e4f8;
   margin: auto;
   align-items: center;
+  @media (max-width: 400px) {
+    display: block;
+    text-align: center;
+    height: 100px;
+  }
 `;
 const CopyRight = styled.div`
   font-family: "Lato";
@@ -23,6 +28,12 @@ const IconsContainer = styled.div`
   display: flex;
   width: 100px;
   justify-content: space-between;
+  align-items: center;
+  @media (max-width: 400px) {
+    padding-top: 20px;
+    width: 50%;
+    margin: auto;
+  }
 `;
 const Icons = styled.div`
   cursor: pointer;
@@ -31,7 +42,6 @@ const Icons = styled.div`
 function CopyRights() {
   return (
     <Container>
-      <CopyRight>©Webecy - All Rights Reserved</CopyRight>
       <IconsContainer>
         <Icons>
           <FacebookOutlined />
@@ -43,6 +53,7 @@ function CopyRights() {
           <Instagram />
         </Icons>
       </IconsContainer>
+      <CopyRight>©Webecy - All Rights Reserved</CopyRight>
     </Container>
   );
 }

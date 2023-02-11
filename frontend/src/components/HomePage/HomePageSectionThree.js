@@ -15,6 +15,9 @@ const LeftSide = styled.div`
   flex: 1;
   display: flex;
   justify-content: end;
+  @media (max-width: 850px) {
+    display: none;
+  }
 `;
 const Img = styled.img`
   width: 558px;
@@ -25,8 +28,11 @@ const RightSide = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 65%;
+  height: 80%;
   justify-content: space-between;
+  @media (max-width: 850px) {
+    align-items: center;
+  }
 `;
 const Heading = styled.div`
   font-family: "Josefin Sans";
@@ -37,15 +43,23 @@ const Heading = styled.div`
   letter-spacing: 0.015em;
 
   color: #151875;
+  @media (max-width: 1100px) {
+    width: 90%;
+    font-size: 30px;
+  }
 `;
 const Items = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   height: 140px;
+  @media (max-width: 650px) {
+    width: 90%;
+  }
 `;
 const Item = styled.div`
   display: flex;
+  margin: 20px 0px;
 `;
 const Dot = styled.div`
   height: 11px;
@@ -66,10 +80,14 @@ const Text = styled.div`
   letter-spacing: 0.015em;
 
   color: #acabc3;
+  @media (max-width: 1100px) {
+    width: 90%;
+  }
 `;
 const BtnAndPrice = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 40px;
 `;
 const Price = styled.div`
   font-family: "Josefin Sans";

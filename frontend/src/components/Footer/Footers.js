@@ -4,6 +4,9 @@ import styled from "styled-components";
 const Container = styled.div`
   height: 500px;
   background: #eeeffb;
+  @media (max-width: 900px) {
+    height: 1300px;
+  }
 `;
 const Wrap = styled.div`
   width: 75%;
@@ -11,6 +14,9 @@ const Wrap = styled.div`
   margin: auto;
   padding-top: 80px;
   justify-content: space-around;
+  @media (max-width: 900px) {
+    display: block;
+  }
 `;
 const Hekto = styled.div`
   display: flex;
@@ -33,6 +39,9 @@ const EmailInput = styled.input`
   background: #ffffff;
   opacity: 0.45;
   border-radius: 3px;
+  @media (max-width: 400px) {
+    display: none;
+  }
 `;
 const EmailBtn = styled.button`
   border: none;
@@ -44,7 +53,9 @@ const EmailBtn = styled.button`
   font-size: 16px;
   line-height: 19px;
   cursor: pointer;
-
+  @media (max-width: 400px) {
+    display: none;
+  }
   padding: 12px 40px;
   color: #eeeffb;
 `;

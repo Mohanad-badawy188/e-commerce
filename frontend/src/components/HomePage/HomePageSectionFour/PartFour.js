@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "./PartFour.css";
 import { Pagination } from "swiper";
+import axios from "axios";
 const Container = styled.div`
   width: 75%;
   margin: auto;
   height: 700px;
+  @media (max-width: 1400px) {
+    width: 95%;
+
+}
 `;
 const Header = styled.div`
   text-align: center;
@@ -18,20 +22,28 @@ const Header = styled.div`
   color: #151875;
 `;
 const ItemContainer = styled.div`
-  display: flex;
+display: flex;
+align-items: center;
 `;
 const Item = styled.div`
   margin: 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   :hover {
     animation-name: example;
     animation-duration: 3s;
     animation-fill-mode: forwards;
   }
+  @media (max-width: 500px) {
+margin-right: 80px;
+  }
+
 `;
 const ItemImgContainer = styled.div`
   background: #f6f7fb;
-  height: 270px;
-  width: 270px;
+  height: 200px;
+  width: 200px;
   border-radius: 50%;
   box-shadow: 0px 8px 40px rgba(49, 32, 138, 0.05);
   display: flex;
@@ -43,9 +55,20 @@ const ItemImgContainer = styled.div`
     box-shadow: -5px 8px 0px 1px #9877e7;
     transition: all 1s ease-out;
   }
+  @media (max-width: 1200px) {
+height: 100px;
+width: 100px;
+  }
+  @media (max-width: 650px) {
+  }
+  
 `;
 const ItemImg = styled.img`
-  margin: auto;
+  margin:  auto;
+  @media (max-width: 1200px) {
+height: 100px;
+width: 100px;
+  }
 
   align-items: center;
 `;
@@ -78,6 +101,9 @@ const ItemNameAndPrice = styled.div`
   font-family: "Josefin Sans";
   font-style: normal;
   font-weight: 400;
+  @media (max-width: 950px) {
+margin-top: 60px;
+  }
 `;
 const ItemPrice = styled.div`
   font-size: 16px;
@@ -89,12 +115,24 @@ const ItemName = styled.div`
   line-height: 20px;
 `;
 function PartFour() {
-  const products = useSelector((state) => state.products.products);
-  console.log(products)
+  const [products,setProducts]=useState([])
+  useEffect(() => {
+    const getItems = async () => {
+      try {
+        const res = await axios({
+          method: "get",
+          url: `http://localhost:5000/api/product?category=top`,
+        });
+        setProducts(res.data)
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getItems();
+  }, []);
 
-  const FilteredProducts = products.filter((item) =>
-    item.categories.includes("top")
-  );
+
 
   return (
     <Container>
@@ -112,8 +150,8 @@ function PartFour() {
           }}
           modules={[Pagination]}
           className="mySwiper ">
-          {FilteredProducts &&
-            FilteredProducts.map((item) => (
+          {
+            products?.products?.map((item) => (
               <SwiperSlide key={item._id}>
                 <Item>
                   <ItemImgContainer>
